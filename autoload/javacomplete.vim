@@ -1730,6 +1730,10 @@ fu! s:GetClassPath()
     let path .= s:GetClassPathOfJsp()
   endif
 
+  if &ft == 'java'
+    let path .= s:GetClassPathOfJsp()
+  endif
+
   if exists('b:classpath') && b:classpath !~ '^\s*$'
     return path . b:classpath
   endif
@@ -1791,6 +1795,9 @@ fu! s:GetClassPathOfJsp()
     if isdirectory(path . '/WEB-INF' )
       if isdirectory(path . '/WEB-INF/classes')
 	let b:classpath_jsp .= s:PATH_SEP . path . '/WEB-INF/classes'
+      endif
+      if isdirectory(path . '/jarfix')
+        let b:classpath_jsp .= s:PATH_SEP . path . '/jarfix'
       endif
       if isdirectory(path . '/WEB-INF/lib')
 	let libs = globpath(path . '/WEB-INF/lib', '*.jar')
